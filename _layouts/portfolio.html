@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<!-- Main Index Scroll -->
+<div>
+    <div class="">
+        <h1>
+            {{ site.full_name }}
+        </h1>
+    </div>
+    <div class="">
+        <h2>
+            Contact
+        </h2>
+        <!-- TODO: Contact information. -->
+        {% for link in site.contact_details %}
+        <li>
+            <a class="a-link" href="{{ link.url }}" target="_self">
+                {{ link.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </div>
+    <div class="">
+        <div class="">
+            {{ content }}
+        </div>
+    </div>
+    <div class="">
+        {% include project-list.html %}
+    </div>
+</div>

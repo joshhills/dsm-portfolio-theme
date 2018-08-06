@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+    <head>
+        <!-- Meta-->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- TODO: SEO-->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ "/assets/styles/main.css?v=" | append: site.github.build_revision | relative_url }}">
+    </head>
+    <body>
+        <!-- Header-->
+        {% include header.html %}
+
+        <!-- Wrapper Content -->
+        {{ content }}
+
+        <!-- Footer -->
+        {% include footer.html %}
+        
+        <!-- TODO: Scripts -->
+    </body>
+</html>

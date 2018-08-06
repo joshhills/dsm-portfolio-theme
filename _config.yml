@@ -1,0 +1,51 @@
+# Site configutation
+# 1. Files excluded from Jekyll builds
+# 2. Installed Gems
+# 3. Gem settings
+# 4. Jekyll settings
+# 5. Collections
+# 6. Jekyll collections settings
+# 7. Site settings
+# 8. User settings
+
+# 1. Files excluded from Jekyll builds
+exclude:
+- Gemfile
+- Gemfile.lock
+- dsm-portfolio-theme.gemspec
+
+# 2. Files included from Jekyll builds
+include:
+- _pages
+
+# 2. Installed Gems
+plugins:
+- jekyll-jupyter-notebook
+
+# 3. Gem settings
+
+# 4. Jekyll settings
+
+# 5. Collections
+# collections
+#   testimonials
+
+# 6. Jekyll collections settings
+
+# 7. Site settings
+encoding: utf-8
+lang: en-GB
+notebook_base_path: /assets/notebooks/
+
+# 8. User settings
+full_name: Josh Hills
+contact_details:
+  - type: email 
+    title: Email
+    url: josh@jargonify.com
+  - type: website
+    title: Github
+    url: https://github.com/joshhills
+  - type: website
+    title: LinkedIn
+    url: https://linkedin.com/in/joshuahills

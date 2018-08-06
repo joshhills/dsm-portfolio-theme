@@ -1,0 +1,29 @@
+<!-- List all projects in collection -->
+<div class="o-project-list">
+    <h2>
+        Projects
+    </h2>
+    <div class="">
+        <!-- Group posts by subdirectory (parent project Id) -->
+        {% assign postsByProject = site.posts | group_by_exp: "post", "post.projectId" %}
+        {% for project in postsByProject %}
+            <div class="">
+                <p class="">
+                    <!-- Date of submission -->
+                    {{ project.items[0].date | date: "%d-%m-%Y" }}
+                </p>
+                <div class="">
+                    <!-- Project details -->
+                    <h3 class="">
+                        {{ project.items[0].projectTitle }}
+                    </h3>
+                    <div class="">
+                        {% for file in project.items %}
+                            <a class="" href="{{ file.url }}">{{ file.type | capitalize }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

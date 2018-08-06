@@ -1,0 +1,63 @@
+---
+layout: default
+---
+<div class="">
+    <div class="">
+        <a class="" href="/">Portfolio</a> &gt;
+        {{ page.projectTitle }} &gt;
+        {{ page.type | capitalize }}
+    </div>
+    <div class="">
+        <h1>
+            {{ page.projectTitle }}
+        </h1>
+    </div>
+</div>
+<div class="">
+    <div class="">
+        <h3>
+            Summary
+        </h3>
+        {{ content }}
+    </div>
+    <div class="">
+        <div class="">
+            <h3>
+                Length
+            </h3>
+            {{ page.length }}
+        </div>
+        <div class="">
+            <h3>
+                Tags
+            </h3>
+            <ul class="">
+                {% for tag in page.tags %}
+                    <li>
+                        {{ tag }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="">
+            <h3>
+                External Resources
+            </h3>
+            <ul class="">
+                {% for external_resource in page.external_resources %}
+                    <li>
+                        <a class="" href="{{ external_resource.url }}" target="_blank">
+                            {{ external_resource.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% if page.notebook_file %}
+        <div class="">
+            {% assign notebook_path = site.notebook_base_path | append: page.notebook_file %}
+            {% jupyter_notebook notebook_path: notebook_path %}
+        </div>
+    {% endif %}
+</div>

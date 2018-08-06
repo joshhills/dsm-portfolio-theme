@@ -1,0 +1,12 @@
+<!-- Important Links -->
+<div class="m-header">
+    <ul class="m-header__links">
+        {% for header-link in site.data.header-links %}
+        <li>
+            <a class="a-link" href="{{ header-link.url }}" target="_self">
+                {{ header-link.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,37 @@
+---
+# Front matter hyphens tell Jekyll pre-processor this is the main SCSS file.
+---
+
+/***
+ * This file imports all partials required by the site.
+ * The design philosphy employed is 'atomic design'.
+ *
+ * Jekyll does not natively support 'globbing', so paths
+ * to new files must be specified manually.
+ */
+
+// Base styles.
+@import "base/colours";
+@import "base/fonts";
+@import "base/normalize";
+@import "base/spacing";
+
+// Atoms.
+@import "atoms/forms";
+@import "atoms/images";
+@import "atoms/links";
+@import "atoms/lists";
+@import "atoms/tables";
+@import "atoms/typography";
+
+// Molecules.
+@import "molecules/header";
+@import "molecules/footer";
+
+// Organisms.
+// @import "organisms/";
+
+// Layouts.
+@import "layouts/evaluation";
+@import "layouts/page";
+@import "layouts/portfolio";
