@@ -5,7 +5,7 @@
     </h2>
     <div class="">
         <!-- Group posts by subdirectory (parent project Id) -->
-        {% assign postsByProject = site.posts | group_by_exp: "post", "post.projectId" %}
+        {% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
         {% for project in postsByProject %}
             <div class="">
                 <p class="">
@@ -15,7 +15,7 @@
                 <div class="">
                     <!-- Project details -->
                     <h3 class="">
-                        {{ project.items[0].projectTitle }}
+                        {{ project.items[0].project_title }}
                     </h3>
                     <div class="">
                         {% for file in project.items %}
