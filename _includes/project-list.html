@@ -19,7 +19,7 @@
                     </h3>
                     <div class="">
                         {% for file in project.items %}
-                            <a class="" href="{{ file.url }}">{{ file.type | capitalize }}</a>
+                            <a class="" href="{{ file.url | relative_url }}">{{ file.type | capitalize }}</a>
                         {% endfor %}
                     </div>
                 </div>
