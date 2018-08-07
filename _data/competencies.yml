@@ -2,4 +2,13 @@
   title: Example Competency
   categories:
     - Example Category 1
+
+- id: C2
+  title: Example Competency 2
+  categories:
     - Example Category 2
+
+- id: C3
+  title: Example Competency 3
+  categories:
+    - Example Category 3
