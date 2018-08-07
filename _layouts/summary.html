@@ -3,7 +3,7 @@ layout: default
 ---
 <div class="">
     <div class="">
-        <a class="" href="/">Portfolio</a> &gt;
+        <a class="" href="{{ '/' | relative_url }}">Portfolio</a> &gt;
         {{ page.projectTitle }} &gt;
         {{ page.type | capitalize }}
     </div>
@@ -56,7 +56,7 @@ layout: default
     </div>
     {% if page.notebook_file %}
         <div class="">
-            {% assign notebook_path = site.notebook_base_path | append: page.notebook_file %}
+            {% assign notebook_path = site.notebook_base_path | append: page.notebook_file | relative_url %}
             {% jupyter_notebook notebook_path: notebook_path %}
         </div>
     {% endif %}
