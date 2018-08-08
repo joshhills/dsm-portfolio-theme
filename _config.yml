@@ -20,6 +20,7 @@ include:
 
 # 2. Installed Gems
 plugins:
+- dsm-portfolio-plugin
 - jekyll-jupyter-notebook
 
 # 3. Gem settings
