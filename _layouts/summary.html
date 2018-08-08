@@ -56,8 +56,7 @@ layout: default
     </div>
     {% if page.notebook_file %}
         <div class="">
-            {% assign notebook_path = site.notebook_base_path | append: page.notebook_file | relative_url %}
-            {% jupyter_notebook notebook_path: notebook_path %}
+            {% jupyter_notebook site.notebook_base_path | append: page.notebook_file | relative_url %}
         </div>
     {% endif %}
 </div>
