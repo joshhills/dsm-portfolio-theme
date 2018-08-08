@@ -50,8 +50,11 @@ $vignette = (function () {
         // Access DOM elements.
         registerUI();
 
-        // Set classes.
+        // Set table data.
         _updateTable(0);
+
+        // Move to latest view.
+        _updateVignette(_vignettes.length - 1);
 
         // Expose functions.
         return {
