@@ -4,7 +4,7 @@ project_code: 1
 ---
 
 {% vignette %}
-In this project, I carried out statistical analysis{% c C1 %} on the dataset in order to prepare it for feature selection with further machine learning.
+In this project, I carried out statistical analysis{% c C1 %} on the dataset in order to prepare it for feature selection with further machine learning.{% c C2 %}
 {% endvignette %}
 
 {% vignette %}

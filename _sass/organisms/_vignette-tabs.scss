@@ -1,0 +1,11 @@
+.o-vignette-tabs {
+    &__tab {
+        &--active {
+            font-weight: bold;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

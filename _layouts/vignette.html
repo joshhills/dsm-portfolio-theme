@@ -5,20 +5,32 @@ layout: default
 <!-- Competencies block -->
 
 <!-- Vignette tabs -->
-<div class="">
-    {% for vignette in page.vignettes %}
-
-    {% endfor %}
+<div class="o-vignette-tabs">
+    <h3>
+        Iterations
+    </h3>
+    <ul class="o-vignette-tabs__container">
+        {% for vignette in page.vignettes %}
+            {% if forloop.index == 1 %}
+                {% assign classString = 'o-vignette-tabs__tab--active' %}
+            {% else %}
+                {% assign classString = '' %}
+            {% endif %}
+            <li id="tab-{{ forloop.index | minus: 1 }}" class="o-vignette-tabs__tab {{ classString }}" onclick="javascript:$vignette.updateVignette({{ forloop.index | minus: 1 }})">
+                {{ forloop.index }} 
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 
 <!-- Vignette content blocks -->
-<div class="">
+<div class="o-vignette-blocks">
     {{ content }}
 </div>
 
 <!-- Inject data variables into page context for JavaScript -->
 <script>
-    // Store raw data.
+    // Store raw data in ubiquitous object.
     this.window['vignettes'] = {{ page.vignettes | jsonify }};
     this.window['targets'] = {{ page.targets | jsonify }};
 </script>

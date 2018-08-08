@@ -105,7 +105,11 @@ module Jekyll
             # Render text as normal.
             rendered = super
             # Wrap in page-specific markup.
-            "<div class=\"\" id=\"vignette-#{context['page']['vignettes'].size - 1}\">#{rendered}</div>"
+            classString = 'o-vignette-blocks__block'
+            if context['page']['vignettes'].size == 1
+                classString += ' o-vignette-blocks__block--active'
+            end
+            "<div class=\"#{classString}\" id=\"block-#{context['page']['vignettes'].size - 1}\">#{rendered}</div>"
         end
     end
 
