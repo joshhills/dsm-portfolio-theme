@@ -2,5 +2,8 @@
 - url: /about
   title: About
 
+- url: /api/v1
+  title: API
+
 - url: #
   title: School Of Computing Science

@@ -1,0 +1,4 @@
+---
+---
+
+{{ site.posts | where: "type", "vignette" | jsonify }}

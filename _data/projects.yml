@@ -2,7 +2,7 @@
   title: Test Project 
   description: This is a description of the test project.
   deadline: 12-12-2018
-  competencies: # IDs
+  targets: # IDs
     - C1
     - C2
     - C3

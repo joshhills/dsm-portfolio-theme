@@ -80,8 +80,8 @@ module Jekyll
       
         def render(context)
             # Check for existence of vignette iterations.
-            if !context['vignettes']
-                context['vignettes'] = []
+            if !context['page']['vignettes']
+                context['page']['vignettes'] = []
 
                 # Check for project data.
                 if context['page']['project_code']
@@ -89,7 +89,7 @@ module Jekyll
                     
                     # Add target competencies.
                     if project
-                        context['targets'] = project['competencies']
+                        context['page']['targets'] = project['targets']
                     end
                 end
             end
@@ -100,17 +100,50 @@ module Jekyll
             }
 
             # Add it to the array.
-            context['vignettes'].push(context['active_vignette'])
+            context['page']['vignettes'].push(context['active_vignette'])
 
             # Render text as normal.
             super
         end
     end
+
+    module Filters
+        module ApiFilter
+            def flatten_hash(input)
+                all_values = input.to_a.flatten
+                hash_values = all_values.select { |value| value.class == Hash }
+                most_nested_values = []
+        
+                if hash_values.count > 0
+                  hash_values.each do |hash_value|
+                    most_nested_values << flatten_hash(hash_value)
+                  end
+        
+                  most_nested_values.flatten
+                else
+                  return input
+                end
+              end
+            def filter_fields(input, fields)
+                downcased_fields = fields
+                    .split(",")
+                    .map { |field| field.strip.downcase }
+    
+                input.map do |entry|
+                    entry.select do |key, value|
+                        downcased_fields.include?(key.downcase)
+                    end
+                end
+            end
+        end
+    end
 end
 
-# Register new tags.
+# Register everything.
 Liquid::Template.register_tag('c', Jekyll::CompetencyTag)
 Liquid::Template.register_tag('competency', Jekyll::CompetencyTag)
 
 Liquid::Template.register_tag('v', Jekyll::VignetteTag)
 Liquid::Template.register_tag('vignette', Jekyll::VignetteTag)
+
+Liquid::Template.register_filter(Jekyll::Filters::ApiFilter)

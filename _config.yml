@@ -25,6 +25,17 @@ plugins:
 # 3. Gem settings
 
 # 4. Jekyll settings
+defaults:
+-
+  scope:
+    path: _pages
+  values:
+    permalink: /:basename
+-
+  scope:
+    path: _pages/api/v1
+  values:
+    permalink: /api/v1/:basename
 
 # 5. Collections
 # collections
