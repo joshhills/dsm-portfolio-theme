@@ -103,7 +103,9 @@ module Jekyll
             context['page']['vignettes'].push(context['active_vignette'])
 
             # Render text as normal.
-            super
+            rendered = super
+            # Wrap in page-specific markup.
+            "<div class=\"\" id=\"vignette-#{context['page']['vignettes'].size - 1}\">#{rendered}</div>"
         end
     end
 

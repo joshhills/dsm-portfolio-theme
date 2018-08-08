@@ -2,4 +2,23 @@
 layout: default
 ---
 
-{{ content }}
+<!-- Competencies block -->
+
+<!-- Vignette tabs -->
+<div class="">
+    {% for vignette in page.vignettes %}
+
+    {% endfor %}
+</div>
+
+<!-- Vignette content blocks -->
+<div class="">
+    {{ content }}
+</div>
+
+<!-- Inject data variables into page context for JavaScript -->
+<script>
+    // Store raw data.
+    this.window['vignettes'] = {{ page.vignettes | jsonify }};
+    this.window['targets'] = {{ page.targets | jsonify }};
+</script>
