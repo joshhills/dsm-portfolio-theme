@@ -16,12 +16,12 @@ layout: default
                 {% endif %}
             </p>
             {% if linked_project.description %}
-                {{ linked_project.description }}
+                <em>"{{ linked_project.description }}"</em>
             {% endif %}
     </div>
 {% else %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>There is no academic project linked.</strong> This is assumed to be a personal project. See <a href="{{ /about | relative_url }}">about</a> for more information.
+    <strong>There is no academic project linked.</strong> This is assumed to be a personal project. See <a href="{{ '/about' | relative_url }}">about</a> for more information.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -85,4 +85,6 @@ layout: default
     this.window['vignette_vignettes'] = {{ page.vignettes | jsonify }};
     this.window['vignette_targets'] = {{ page.targets | jsonify }};
     this.window['vignette_c_url'] = "{{ '/competencies' | relative_url }}";
+    this.window['vignette_sort_competencies'] = true;
+    this.window['vignette_mark_table'] = true;
 </script>

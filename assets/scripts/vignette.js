@@ -13,7 +13,7 @@ $vignette = (function () {
     var _index      = 0;
     var _tableData  = [];
     var _cUrl       = '/competencies';
-    var _sort       = true;
+    var _markTable  = false; 
 
     // UI elements
     var _blocks     = [];
@@ -33,7 +33,7 @@ $vignette = (function () {
         _vignettes = window['vignette_vignettes'];
         _targets   = window['vignette_targets'];
         _cUrl      = window['vignette_c_url'];
-        _sort      = window['vignette_sort_competencies'];
+        _markTable = window['vignette_mark_table'];
 
         // Defensive checking.
         if(!_vignettes) {
@@ -68,7 +68,8 @@ $vignette = (function () {
             combine: _combine,
             updateVignette: _updateVignette,
             nextVignette: _nextVignette,
-            previousVignette: _previousVignette
+            previousVignette: _previousVignette,
+            sort: _sortCurrentVignette
         };
     }
 
@@ -100,9 +101,9 @@ $vignette = (function () {
      * @param {*} index
      * @returns
      */
-    function _updateVignette(index) {
+    function _updateVignette(index, override = false) {
         // Redundancy check.
-        if(_index === index) {
+        if(_index === index && !override) {
             return;
         }
 
@@ -164,6 +165,10 @@ $vignette = (function () {
         _table.innerHTML = _tableData[index];
     }
 
+    function _sortTable() {
+        // Perform sort on current table using key (column).
+    }
+
     // Define utility functions.
 
     /**
@@ -189,7 +194,18 @@ $vignette = (function () {
         }
     }
 
-    function _tableify(index) {
+    function _sortCurrentVignette(sortKey, ascending) {
+        // Sort the table.
+        for(var i = 0; i < _vignettes.length; i++) {
+            // Recompute table data ahead of time.
+            _tableData[i] = _tableify(i, sortKey, ascending);
+        }
+
+        // Update table HTML.
+        _updateVignette(_index, true);
+    }
+
+    function _tableify(index, sortKey = 'competencyId', ascending = true) {
         // Build HTML for all unique skills...
         var tableRowsData = [];
         var tableRowsHTML = [];
@@ -217,24 +233,33 @@ $vignette = (function () {
                     }
                     return 0;
                 })(),
-                removed: _indexDiffWithType(competency, index, 'removed'),
+                removed: Math.abs(_indexDiffWithType(competency, index, 'removed')),
                 unchanged: _indexDiffWithType(competency, index, 'unchanged'),
                 added: _indexDiffWithType(competency, index, 'added')
             };
             tableRowsData.push(tableRowData);
         }
 
-        // Sort rows by Id.
-        if(_sort) {
-            tableRowsData.sort(function(a, b){
-                var nameA = a.competencyId.toLowerCase(), nameB = b.competencyId.toLowerCase();
-                if (nameA < nameB)
+        // Sort rows by Id (default).
+        tableRowsData.sort(function(a, b){
+            var nameA = a[sortKey], nameB = b[sortKey];
+            if(nameA < nameB) {
+                if(ascending) {
                     return -1;
-                if (nameA > nameB)
+                }
+                else {
                     return 1;
-                return 0;
-            });
-        }
+                }
+            }
+            if(nameA > nameB) {
+                if(ascending) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+            return 0;
+        });
 
         for(let tableRowData of tableRowsData) {
             // Convert table row data into HTML.
@@ -242,11 +267,79 @@ $vignette = (function () {
         }
 
         // Create new table.
-        var headerRow = '<tr id="table-header"><th>Competency</th>';
-        if(_targets) {
-            headerRow +=  '<th>Target</th>'
+        var headerRow = '<tr id="table-header"><th>Competency ';
+        if(sortKey === 'competencyId') {
+            if(ascending) {
+                headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'competencyId\', false)"></i>';
+            } else {
+                headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'competencyId\', true)"></i>'
+            }
+        } else {
+            headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'competencyId\', false)"></i>';
         }
-        headerRow +=      '<th>Count</th><th>Removed</th><th>Unchanged</th><th>Added</th></tr>';
+        headerRow += '</th>';
+
+        if(_targets) {
+            headerRow += '<th>Target ';
+            if(sortKey === 'target') {
+                if(ascending) {
+                    headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'target\', false)"></i>';
+                } else {
+                    headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'target\', true)"></i>'
+                }
+            } else {
+                headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'target\', false)"></i>';
+            }
+            headerRow += '</th>';
+        }
+
+        headerRow +=      '<th>Count ';
+        if(sortKey === 'count') {
+            if(ascending) {
+                headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'count\', false)"></i>';
+            } else {
+                headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'count\', true)"></i>'
+            }
+        } else {
+            headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'count\', false)"></i>';
+        }
+        headerRow += '</th>';
+
+        headerRow += '<th>Removed ';
+        if(sortKey === 'removed') {
+            if(ascending) {
+                headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'removed\', false)"></i>';
+            } else {
+                headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'removed\', true)"></i>'
+            }
+        } else {
+            headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'removed\', false)"></i>';
+        }
+        headerRow += '</th>';
+        
+        headerRow += '<th>Unchanged ';
+        if(sortKey === 'unchanged') {
+            if(ascending) {
+                headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'unchanged\', false)"></i>';
+            } else {
+                headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'unchanged\', true)"></i>'
+            }
+        } else {
+            headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'unchanged\', false)"></i>';
+        }
+        headerRow += '</th>';
+        
+        headerRow += '<th>Added ';
+        if(sortKey === 'added') {
+            if(ascending) {
+                headerRow += '<i class="fas fa-sort-down" onclick="javascript:$vignette.sort(\'added\', false)"></i>';
+            } else {
+                headerRow += '<i class="fas fa-sort-up" onclick="javascript:$vignette.sort(\'added\', true)"></i>'
+            }
+        } else {
+            headerRow += '<i class="fas fa-sort" onclick="javascript:$vignette.sort(\'added\', false)"></i>';
+        }
+        headerRow += '</th></tr>';
 
         var finalHTML = headerRow;
 
@@ -281,8 +374,13 @@ $vignette = (function () {
      * @param {*} tableRowData HTML to inject.
      */
     function _tableRowDataToHTML(tableRowData) {
-        var encoded =   '<tr><td>';
+        var encoded =   '<tr';
+
+        if(_markTable && tableRowData.target && tableRowData.count > 0) {
+            encoded += ' class="table-success"';
+        }
         
+        encoded += '><td>';
         if(tableRowData['linked']) {
             encoded += '<a href="' +
                         _cUrl +
@@ -305,11 +403,19 @@ $vignette = (function () {
             encoded += '</td><td>';
         }
         encoded +=  tableRowData['count'] +
-                    '</td><td>' +
+                    '</td><td';
+        if(_markTable && tableRowData['removed'] < 0) {
+            encoded += ' class="table-danger"';
+        }
+        encoded +=  '>' +
                     tableRowData['removed'] +
                     '</td><td>' +
                     tableRowData['unchanged'] +
-                    '</td><td>' +
+                    '</td><td';
+        if(_markTable && tableRowData['added'] > 0) {
+            encoded += ' class="table-success"';
+        }
+        encoded +=  '>' +
                     tableRowData['added'] +
                     '</td></tr>';
         return encoded;
