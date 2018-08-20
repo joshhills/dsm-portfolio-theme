@@ -12,10 +12,14 @@ $vignette = (function () {
     var _targetsHit = [];
     var _index      = 0;
     var _tableData  = [];
+    var _cUrl       = '/competencies';
+    var _sort       = true;
 
     // UI elements
     var _blocks     = [];
     var _tabs       = [];
+    var _next       = {};
+    var _previous   = {};
     var _table      = undefined;
 
     /**
@@ -26,8 +30,10 @@ $vignette = (function () {
      */
     function initialize() {
         // Presume access to page variables.
-        _vignettes = window['vignettes'];
-        _targets   = window['targets'];
+        _vignettes = window['vignette_vignettes'];
+        _targets   = window['vignette_targets'];
+        _cUrl      = window['vignette_c_url'];
+        _sort      = window['vignette_sort_competencies'];
 
         // Defensive checking.
         if(!_vignettes) {
@@ -59,8 +65,10 @@ $vignette = (function () {
         // Expose functions.
         return {
             dump: _dump,
+            combine: _combine,
             updateVignette: _updateVignette,
-            combine: _combine
+            nextVignette: _nextVignette,
+            previousVignette: _previousVignette
         };
     }
 
@@ -69,12 +77,18 @@ $vignette = (function () {
      * for manipulation.
      */
     function registerUI() {
-        for(var i = 0; i < vignettes.length; i++) {
+        // Get omnipresent pagination components.
+        _previous = document.getElementById('tab-previous');
+        _next = document.getElementById('tab-next');
+
+        // Get all dynamic elements.
+        for(var i = 0; i < _vignettes.length; i++) {
             // Get tab and content block elements.
             _blocks.push(document.getElementById('block-' + i.toString()));
             _tabs.push(document.getElementById('tab-' + i.toString()));
         }
 
+        // Get table.
         _table = document.getElementById('table');
     }
 
@@ -92,23 +106,49 @@ $vignette = (function () {
             return;
         }
 
+        let activeClass = 'active';
+
         // Update previous tab element.
-        _tabs[_index].classList.remove('o-vignette-tabs__tab--active');
+        _tabs[_index].classList.remove(activeClass);
 
         // Update previous block element.
-        _blocks[_index].classList.remove('o-vignette-blocks__block--active');
+        _blocks[_index].classList.remove(activeClass);
+
+        if(index === 0) {
+            _previous.classList.add('disabled');
+        } else {
+            _previous.classList.remove('disabled');
+        }
+
+        if(index === _vignettes.length - 1) {
+            _next.classList.add('disabled');
+        } else {
+            _next.classList.remove('disabled');
+        }
         
         // Update data model.
         _index = index;
 
         // Update tab element.
-        _tabs[_index].classList.add('o-vignette-tabs__tab--active');
+        _tabs[_index].classList.add(activeClass);
 
         // Update block element.
-        _blocks[_index].classList.add('o-vignette-blocks__block--active');
+        _blocks[_index].classList.add(activeClass);
 
         // Update competency table.
         _updateTable(index);
+    }
+
+    function _nextVignette() {
+        if(_index != _vignettes.length - 1) {
+            _updateVignette(_index + 1);
+        }
+    }
+
+    function _previousVignette() {
+        if(_index != 0) {
+            _updateVignette(_index - 1);
+        }
     }
     
     /**
@@ -151,12 +191,23 @@ $vignette = (function () {
 
     function _tableify(index) {
         // Build HTML for all unique skills...
+        var tableRowsData = [];
         var tableRowsHTML = [];
         
         for(let competency of _all) {
             // Build table row data.
             var tableRowData = {
                 competencyId: competency,
+                linked: (linked => {
+                    for(let v of _vignettes) {
+                        for(let c of v['competencies']) {
+                            if(c['id'] === competency) {
+                                return c['linked'];
+                            }
+                        }
+                    }
+                    return false;
+                })(),
                 target: _targets.indexOf(competency) != -1,
                 count: (total => {
                     for(let c of _vignettes[index]['competencies']) {
@@ -170,6 +221,22 @@ $vignette = (function () {
                 unchanged: _indexDiffWithType(competency, index, 'unchanged'),
                 added: _indexDiffWithType(competency, index, 'added')
             };
+            tableRowsData.push(tableRowData);
+        }
+
+        // Sort rows by Id.
+        if(_sort) {
+            tableRowsData.sort(function(a, b){
+                var nameA = a.competencyId.toLowerCase(), nameB = b.competencyId.toLowerCase();
+                if (nameA < nameB)
+                    return -1;
+                if (nameA > nameB)
+                    return 1;
+                return 0;
+            });
+        }
+
+        for(let tableRowData of tableRowsData) {
             // Convert table row data into HTML.
             tableRowsHTML.push(_tableRowDataToHTML(tableRowData));
         }
@@ -182,6 +249,7 @@ $vignette = (function () {
         headerRow +=      '<th>Count</th><th>Removed</th><th>Unchanged</th><th>Added</th></tr>';
 
         var finalHTML = headerRow;
+
         for(let row of tableRowsHTML) {
             finalHTML += row;
         }
@@ -213,9 +281,21 @@ $vignette = (function () {
      * @param {*} tableRowData HTML to inject.
      */
     function _tableRowDataToHTML(tableRowData) {
-        var encoded =   '<tr><td><span class="a-pill">' +
+        var encoded =   '<tr><td>';
+        
+        if(tableRowData['linked']) {
+            encoded += '<a href="' +
+                        _cUrl +
+                        '#' +
+                        tableRowData['competencyId'] +
+                        '">' +
+                        tableRowData['competencyId'] +
+                        '</a></td><td>';
+        } else {
+            encoded += '<span>' +
                         tableRowData['competencyId'] +
                         '</span></td><td>';
+        }
         if(_targets) {
             if(tableRowData['target']) {
                 encoded += 'Yes';

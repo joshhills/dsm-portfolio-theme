@@ -2,43 +2,87 @@
 layout: default
 ---
 
-<!-- Vignette tabs -->
-<div class="o-vignette-tabs">
-    <h3>
-        Iterations
-    </h3>
-    <ul class="o-vignette-tabs__container">
-        {% for vignette in page.vignettes %}
-            {% if forloop.index == 1 %}
-                {% assign classString = 'o-vignette-tabs__tab--active' %}
-            {% else %}
-                {% assign classString = '' %}
+<!-- Breadcrumbs -->    
+{% include breadcrumbs.html %}
+
+<!-- Project Link -->
+{% assign linked_project = site.data.projects | where:"id", page.project_code | first %}
+{% if page.project_code and linked_project %}
+    <div class="container mb-4">
+            <p class="lead">
+                Linked to academic project <a href="{{ '/projects#' | append: page.project_code | relative_url }}">{{ page.project_code }}</a>
+                {% if linked_project.deadline %}
+                    with a deadline of {{ linked_project.deadline }}
+                {% endif %}
+            </p>
+            {% if linked_project.description %}
+                {{ linked_project.description }}
             {% endif %}
-            <li id="tab-{{ forloop.index | minus: 1 }}" class="o-vignette-tabs__tab {{ classString }}" onclick="javascript:$vignette.updateVignette({{ forloop.index | minus: 1 }})">
-                {{ forloop.index }} 
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+    </div>
+{% else %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>There is no academic project linked.</strong> This is assumed to be a personal project. See <a href="{{ /about | relative_url }}">about</a> for more information.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
 
 <!-- Competencies block -->
-<div class="o-vignette-table">
-    <h3>
-        Competencies
-    </h3>
-    <table id="table">
-        <!-- Dynamically generated content -->
-    </table>
+<div class="row">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table table-hover" id="table">
+                <!-- Dynamically generated content -->
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- Vignette content blocks -->
-<div class="o-vignette-blocks">
-    {{ content }}
+<div class="row">
+    <div class="col">
+        {{ content }}
+    </div>
+</div>
+
+<!-- Vignette tabs -->
+<div class="row mt-4">
+    <div class="col">
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li id="tab-previous" class="page-item disabled">
+                    <a class="page-link" onclick="javascript:$vignette.previousVignette()">Previous</a>
+                </li>
+                {% for vignette in page.vignettes %}
+                    {% if forloop.index == 1 %}
+                        {% assign classString = 'page-item active' %}
+                    {% else %}
+                        {% assign classString = 'page-item' %}
+                    {% endif %}
+                    <li id="tab-{{ forloop.index | minus: 1 }}" class="{{ classString }}">
+                        <a class="page-link" onclick="javascript:$vignette.updateVignette({{ forloop.index | minus: 1 }})">
+                            {{ forloop.index }} 
+                        </a>
+                    </li>
+                {% endfor %}
+                {% if page.vignettes.size > 0 %}
+                    {% assign classString = 'page-item' %}
+                {% else %}
+                    {% assign classString = 'page-item disabled' %}
+                {% endif %}
+                <li id="tab-next" class="{{ classString }}">
+                    <a class="page-link" onclick="javascript:$vignette.nextVignette()">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 
 <!-- Inject data variables into page context for JavaScript -->
 <script>
     // Store raw data in ubiquitous object.
-    this.window['vignettes'] = {{ page.vignettes | jsonify }};
-    this.window['targets'] = {{ page.targets | jsonify }};
+    this.window['vignette_vignettes'] = {{ page.vignettes | jsonify }};
+    this.window['vignette_targets'] = {{ page.targets | jsonify }};
+    this.window['vignette_c_url'] = "{{ '/competencies' | relative_url }}";
 </script>

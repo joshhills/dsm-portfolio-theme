@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<!-- Build a progression table of a student's project competencies. -->
+
+{{ content }}
+
+<!--
+    1. Group all competencies by category
+    2. For every project...
+    3. Construct this object
+
+    {
+        "projectId": "1",
+        "projectTitle": "CSC8631-Data-Visualisation",
+        "deadline": "12-12-2017",
+        "submitted": "true",
+        "competencies": [
+            {
+                "competencyId": "1",
+                "target": "true",
+                "achieved": "true"
+            }
+        ],
+        "allTargetsHit": "false"
+    }
+-->
+
+{% include progression.html %}

@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Categories</th>
+        </tr>
+        {% for competency in site.data.competencies %}
+        <tr id="{{ competency.id }}">
+            <td>
+                {{ competency.id }}
+            </td>
+            <td>
+                {{ competency.title }}
+            </td>
+            <td>
+                {{ competency.description }}
+            </td>
+            <td>
+                {% for category in competency.categories %}
+                    {{ category }}<br/>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

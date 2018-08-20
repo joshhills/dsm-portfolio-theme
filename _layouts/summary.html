@@ -1,26 +1,28 @@
 ---
 layout: default
 ---
-<div class="">
-    <div class="">
-        <a class="" href="{{ '/' | relative_url }}">Portfolio</a> &gt;
-        {{ page.project_title }} &gt;
-        {{ page.type | capitalize }}
-    </div>
-    <div class="">
+<!-- Breadcrumbs -->    
+{% include breadcrumbs.html %}
+
+<!-- Title -->
+<div class="row">
+    <div class="col">
         <h1>
             {{ page.project_title }}
         </h1>
     </div>
 </div>
-<div class="">
-    <div class="">
+
+<div class="row">
+    <!-- Content -->
+    <div class="col">
         <h3>
             Summary
         </h3>
         {{ content }}
     </div>
-    <div class="">
+    <!-- Meta -->
+    <div class="col">
         <div class="">
             <h3>
                 Length
@@ -54,9 +56,14 @@ layout: default
             </ul>
         </div>
     </div>
-    {% if page.notebook_file %}
-        <div class="">
-            {% jupyter_notebook site.notebook_base_path | append: page.notebook_file | relative_url %}
-        </div>
-    {% endif %}
 </div>
+
+{% if page.notebook_file %}
+    <div class="row">
+        <div class="col">
+            <div class="">
+                {% jupyter_notebook site.notebook_base_path | append: page.notebook_file | relative_url %}
+            </div>
+        </div>
+    </div>  
+{% endif %}

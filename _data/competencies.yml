@@ -1,14 +1,17 @@
 - id: C1
   title: Example Competency 1
+  description: Test description
   categories:
     - Example Category 1
 
 - id: C2
   title: Example Competency 2
+  description: Test description
   categories:
     - Example Category 2
 
 - id: C3
   title: Example Competency 3
+  description: Test description
   categories:
     - Example Category 3

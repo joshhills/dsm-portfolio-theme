@@ -1,0 +1,25 @@
+<!-- Important Links -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ '/' | relative_url }}">Portfolio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            {% for header-link in site.data.header-links %}
+            <li class="nav-item active">
+                {% if header-link.external %}
+                <a class="btn btn-outline-primary ml-2" href="{{ header-link.url | relative_url }}" target="_blank">
+                    {{ header-link.title }}
+                </a>
+                {% else %}
+                <a class="nav-link" href="{{ header-link.url | relative_url }}" target="_self">
+                    {{ header-link.title }}
+                </a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
