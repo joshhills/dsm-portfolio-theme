@@ -1,29 +1,28 @@
 <!-- List all projects in collection -->
-<div class="o-project-list">
-    <h2>
-        Projects
-    </h2>
-    <div class="">
+<div class="row">
+    <div class="col">
+        <h2 class="mb-4">
+            Projects
+        </h2>
+        <!-- TODO: Add search bar -->
         <!-- Group posts by subdirectory (parent project Id) -->
         {% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
         {% for project in postsByProject %}
-            <div class="">
-                <p class="">
-                    <!-- Date of submission -->
-                    {{ project.items[0].date | date: "%d-%m-%Y" }}
-                </p>
-                <div class="">
-                    <!-- Project details -->
-                    <h3 class="">
-                        {{ project.items[0].project_title }}
-                    </h3>
-                    <div class="">
-                        {% for file in project.items %}
-                            <a class="" href="{{ file.url | relative_url }}">{{ file.type | capitalize }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
+        <!-- TODO: Yellow and a message if there is a linked project with a deadline coming up -->
+        <!-- TODO: Blue border and a message if it is a personal project -->
+        <div class="card mb-4 border-primary">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.items[0].project_title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ project.items[0].date | date: "%d-%m-%Y" }}</h6>
+                <p class="card-text"><small class="text-muted text-primary">Personal Project</small></p>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                {% for file in project.items %}
+                    <!-- Add number of vignettes pill -->
+                    <a class="card-link" href="{{ file.url | relative_url }}">{{ file.type | capitalize }}</a>
+                {% endfor %}
             </div>
+        </div>
         {% endfor %}
+        </div>
     </div>
 </div>

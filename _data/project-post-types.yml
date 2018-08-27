@@ -1,0 +1,5 @@
+- post_type: vignette
+  template_file: vignette-example.md
+
+- post_type: summary
+  template_file: summary-example.md

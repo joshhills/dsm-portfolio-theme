@@ -6,6 +6,7 @@ layout: default
 {% include breadcrumbs.html %}
 
 <!-- Project Link -->
+<!-- TODO: Make this an info bar with an expandable description. -->
 {% assign linked_project = site.data.projects | where:"id", page.project_code | first %}
 {% if page.project_code and linked_project %}
     <div class="container mb-4">
