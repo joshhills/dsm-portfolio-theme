@@ -1,0 +1,14 @@
+---
+---
+
+{
+    "data": [
+    {% assign summaries = site.posts | where: "type", "summary" %}
+    {% for summary in summaries %}
+        {{ summary | strip_fields_from_document: 'next,previous,output' | jsonify }}
+        {% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ],
+    "status": "OK",
+    "last_updated": "{{ 'now' | date_to_rfc822 }}"
+}

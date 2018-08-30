@@ -1,0 +1,24 @@
+---
+---
+{% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
+
+{
+    "data": [
+    {% for project in postsByProject %}
+        {
+            "project_title": "{{ project.items[0].project_title }}",
+            "project_id": "{{ project.name }}",
+            "project_code": "{{ project.items[0].project_code }}",
+            "date_published": "{{ project.items[0].date | date_to_rfc822 }}",
+            "project_urls": {{ project.items[0].project_urls | jsonify }},
+            "items": [
+            {% for item in project.items %}
+                {{ item | strip_fields_from_document: 'next,previous,output' | jsonify}}{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+            ]
+        }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ],
+    "status": "OK",
+    "last_updated": "{{ 'now' | date_to_rfc822 }}"
+}

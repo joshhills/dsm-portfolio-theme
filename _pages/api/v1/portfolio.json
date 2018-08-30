@@ -1,5 +1,0 @@
----
----
-
-{% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
-{{ postsByProject | jsonify }}

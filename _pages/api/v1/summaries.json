@@ -1,4 +1,0 @@
----
----
-
-{{ site.posts | where: "type", "summary" | jsonify }}

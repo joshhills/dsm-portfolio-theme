@@ -22,6 +22,7 @@ include:
 plugins:
 - dsm-portfolio-plugin
 - jekyll-jupyter-notebook
+- liquid_pluralize
 
 # 3. Gem settings
 

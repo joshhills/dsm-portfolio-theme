@@ -1,0 +1,4 @@
+---
+---
+
+{{ site.data.projects | wrap_with_key: "data" | jsonify }}
