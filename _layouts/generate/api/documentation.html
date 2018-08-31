@@ -5,16 +5,253 @@ permalink: /api/index
 
 <div class="container">
     <div class="row">
-        <div class="col-sm">
+        <div class="col-lg-3 mb-4">
             <!-- API Navigation -->
-            <div class="row">
-                Nav
+            <div class="row sticky-top t-1" style="top: 1rem">
+                <ul id="index" class="list-group container-fluid" style="padding-left: 15px">
+                    <a href="#v1" class="list-group-item list-group-item-light flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Version 1</h5>
+                            <small>01/09/2018</small>
+                        </div>
+                        <p class="mb-1">Basic dumps of all site data.</p>
+                    </a>
+                    <a href="#overview" class="list-group-item">Overview</a>
+                    <a href="#projects" class="list-group-item">Projects</a>
+                    <a href="#competencies" class="list-group-item">Competencies</a>
+                    <a href="#portfolio" class="list-group-item">Portfolio</a>
+                    <a href="#summaries" class="list-group-item">Summaries</a>
+                    <a href="#vignettes" class="list-group-item">Vignettes</a>
+                </ul>
             </div>
         </div>
         <!-- Request Documentation -->
-        <div class="col">
+        <div class="col-lg">
             <div class="row">
-                Documentation
+                <div class="container">
+                    <div class="row">
+                        <div class="container">
+                            <p class="h1" id="v1">Version 1</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="overview">Overview</p>
+                            <p>
+                                The API is enabled by default, and publicly accessible (no key needed). This can be modified in the <code>_config.yml</code>.
+                            </p>
+                            <p>
+                                The request format is a simple GET for each, and the response format is unpaginated <a href="https://en.wikipedia.org/wiki/JSON" target="_blank">JSON</a>,
+                                meaning everything can be retrieved with one request. For consistency and usability, the data is wrapped in a generic format:
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                    <code class="mr-2">Example Request</code>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">ALL</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [...],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                            <p>
+                                The type of data accessible is split between administrative and user data - this is tagged per endpoint. There is some crossover
+                                if the user has extended these definitions.
+                                An index is available <a href="{{ "api/v1" | relative_url }}">here</a>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="projects">Projects</p>
+                            <p>
+                                Data on projects for the current academic year.
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                    <a href="{{ "api/v1/projects.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/projects.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">ADMIN</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+        {
+            "id": 1,
+            "title": "Test Project",
+            "description": "This is a description of the test project.",
+            "deadline": "XX-XX-XXXX",
+            "targets": [
+                "C1",
+                "C2",
+                "C3"
+            ]
+        }
+    ],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="competencies">Competencies</p>
+                            <p>
+                                Data on competencies in the skill-based framework that may be used in vignettes.
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                    <a href="{{ "api/v1/competencies.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/competencies.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">ADMIN</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+        {
+            "id": "C1",
+            "title": "Example Competency 1",
+            "description": "Test description",
+            "categories": [
+                "Example Category 1"
+            ]
+        }
+    ],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="portfolio">Portfolio</p>
+                            <p>
+                                All user-submitted project data.
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                        <a href="{{ "api/v1/competencies.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/portfolio.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">USER</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+    {
+        "project_title": "Test Project",
+        "project_id": "/XXXX/XX/XX/test-project",
+        "project_code": "1",
+        "date_published": "...",
+        "project_urls": {
+            "summary": "/XXXX/XX/XX/test-project-one-summary.html",
+            "vignette": "/XXXX/XX/XX/test-project-one-vignette.html"
+        },
+        "items": [
+            {..}
+        ]
+    }
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="summaries">Summaries</p>
+                            <p>
+                                All project summaries.
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                        <a href="{{ "api/v1/summaries.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/summaries.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">USER</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+        {
+            "id": "/XXXX/XX/XX/test-project-two/summary",
+            "title": "Test Project/summary",
+            "content": "...",
+            "url": "/XXXX/XX/XX/test-project-summary.html",
+            "tags": [...],
+            "date": "...",
+            "project_code": 1,
+            "length": "X Months",
+            "notebook_file": "example.ipynb",
+            "external_resources": [
+                {
+                    "url": "...",
+                    "title": "..."
+                }
+            ]
+        }
+    ],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="vignettes">Vignettes</p>
+                            <p>
+                                All project vignettes (and their computed metadata).
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                        <a href="{{ "api/v1/vignettes.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/vignettes.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">USER</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+        {
+            "id": "/XXXX/XX/XX/test-project/vignette",
+            "title": "Test Project/vignette",
+            "content": "...",
+            "project_code": 1,
+            "url": "/XXXX/XX/XX/test-project-vignette.html",
+            "tags": [...],
+            "date": "...",
+            "vignettes": [
+                {
+                    "competencies": [
+                        {
+                            "id": "C1",
+                            "count": 1,
+                            "linked": true
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                "C1"
+            ]
+        }
+    ],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -27,17 +27,8 @@ plugins:
 # 3. Gem settings
 
 # 4. Jekyll settings
-defaults:
--
-  scope:
-    path: _pages
-  values:
-    permalink: /:basename
--
-  scope:
-    path: _pages/api/v1
-  values:
-    permalink: /api/v1/:basename
+# defaults:
+
 
 # 5. Collections
 # collections
@@ -49,6 +40,7 @@ defaults:
 encoding: utf-8
 lang: en-GB
 notebook_base_path: /assets/notebooks/
+project_description_truncation: 64
 
 # 8. User settings
 full_name: Josh Hills

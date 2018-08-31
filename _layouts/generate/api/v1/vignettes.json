@@ -4,8 +4,8 @@
 {
     "data": [
     {% assign vignettes = site.posts | where: "type", "vignette" %}
-    {% for summary in summaries %}
-        {{ summary | strip_fields_from_document: 'next,previous,output' | jsonify }}
+    {% for vignette in vignettes %}
+        {{ vignette | strip_fields_from_document: 'next,previous,output' | jsonify }}
         {% unless forloop.last %},{% endunless %}
     {% endfor %}
     ],

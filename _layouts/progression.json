@@ -1,4 +1,0 @@
----
----
-
-{{ page.progression_data | jsonify }}

@@ -2,7 +2,7 @@
 - url: /about
   title: About
 
-- url: /api/v1
+- url: /api
   title: API
 
 - url: https://www.google.co.uk/

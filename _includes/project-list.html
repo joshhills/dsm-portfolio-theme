@@ -5,6 +5,10 @@
             Projects
         </h2>
         <!-- TODO: Add search bar -->
+
+        <!-- Page variables -->
+        {% assign truncate_value = site.project_description_truncation | default: 64 %}
+        
         <!-- Group posts by subdirectory (parent project Id) -->
         {% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
         {% for project in postsByProject %}
@@ -34,12 +38,6 @@
             {% assign linked_project = nil %}
             {% assign incomplete = false %}
         {% endif %}
-
-        {% if site.project_description_truncation %}
-            {% assign truncate_value = site.project_description_truncation %}
-        {% else %}
-            {% assign truncate_value = 64 %}
-        {% endif %} 
 
         {% for item in project.items %}
             {% if item.type == "summary" %}
