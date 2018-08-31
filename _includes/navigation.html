@@ -8,9 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             {% for header-link in site.data.header-links %}
-            <li class="nav-item active">
+            {% assign page_url = page.url | replace: ".html","" %}
+            <li class="nav-item {% if page_url == header-link.url %}active{% endif %} {% unless forloop.last %}mr-2{% endunless %}">
                 {% if header-link.external %}
-                <a class="btn btn-outline-primary ml-2" href="{{ header-link.url | relative_url }}" target="_blank">
+                <a class="btn btn-outline-primary" href="{{ header-link.url | relative_url }}" target="_blank">
                     {{ header-link.title }}
                 </a>
                 {% else %}

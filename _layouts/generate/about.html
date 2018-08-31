@@ -1,0 +1,157 @@
+---
+layout: page
+---
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 mb-4">
+            <!-- About Navigation -->
+            <div class="row sticky-top t-1" style="top: 1rem">
+                <ul id="index" class="list-group container-fluid" style="padding-left: 15px">
+                    <a href="#about" class="list-group-item list-group-item-light flex-column align-items-start">
+                        <h5 class="mb-1">About</h5>
+                    </a>
+                    <a href="#usage" class="list-group-item">
+                        <h6 class="mb-1">Usage</h6>
+                    </a>
+                    <a href="#technology" class="list-group-item">Technology</a>
+                    <a href="#installation--forking" class="list-group-item">Installation & Forking</a>
+                    <a href="#altering-details" class="list-group-item">Altering Details</a>
+                    <a href="#creating-projects" class="list-group-item">Creating Projects</a>
+                    <a href="#progression" class="list-group-item">Progression</a>
+                    <a href="#hosting-on-github-pages" class="list-group-item">Hosting On Github Pages</a>
+                    <a href="#api" class="list-group-item">API</a>
+                    <a href="#modifications" class="list-group-item">
+                        <h6 class="mb-1">Modifications</h6>
+                    </a>
+                    <a href="#legal" class="list-group-item">
+                        <h6 class="mb-1">Legal</h6>
+                    </a>
+                    <a href="#attributions" class="list-group-item">
+                        <h6 class="mb-1">Attributions</h6>
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <!-- Contents -->
+        <div class="col-lg">
+            <div class="row">
+                <div class="container">
+                    {% include notice.html %}
+                    {% capture about_contents %}
+# About
+
+This guide provides a brief overview of how to use this software. An example
+site has been provided to reduce the amount of pre-requisite knowledge needed,
+and the theme itself has been built with degradation in mind (meaning that 
+it should be easy to customise and somewhat hard to break!).
+
+The portfolio is produced and maintained by [Josh Hills](mailto:josh@jargonify.com)
+(post-graduate), for the purpose of providing a modern solution to submitting and
+assessing work for the data science masters course at Newcastle University. It may
+be used beyond this scope - see [modifications](#modificiations).
+
+## Usage
+
+### Technology
+
+Jekyll is a static-site generator running in the programming language Ruby.
+It can be run on any major platform.
+
+It uses the Liquid templating engine. You write posts in Markdown, and they
+are converted to a folder containing your entire portfolio site.
+
+The site provides means for the academic institution to add information about
+projects, competencies, useful links and documentation. It provides means for
+students to extend this information, and submit associated work.
+
+It also provides an API to expose student progression for analysis.
+
+### Installation & Forking
+
+- Clone the example site
+- Install Ruby & Jekyll
+- Install & update gem dependencies using commands `bundle install && bundle update`
+- Run Jekyll using command `jekyll serve`
+- Access at `localhost:4000`
+- Every time the site builds it will generate the site at `_site`
+
+### Altering Details
+
+- In `config.yml`, edit user details
+- Overrides/extensions for data files can be added - see the [example folder](https://github.com/joshhills/dsm-portfolio-theme/tree/master/_data) in the demo project.
+
+### Creating Projects
+
+Writing any file for a project can be done using Markdown or HTML. See [cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+
+- `jekyll project "NAME OF PROJECT"`
+- OR copy [example structure](https://github.com/joshhills/dsm-portfolio-theme/tree/master/_posts/2018-02-07-test-project-one) from demo project
+
+#### Summaries
+
+This is a place to summarise a project. You may write this in any format.
+
+By adding a Jupyter notebook file to `assets/notebooks` and including the name in
+the frontmatter, it will render below your summary.
+
+See the [example file](https://github.com/joshhills/dsm-portfolio-theme/blob/master/_posts/2018-02-07-test-project-one/summary.md) in the demo project.
+
+#### Vignettes
+
+This is a place to evaluate your project work, tagging relevant sections with
+the competencies you have satisfied.
+
+By linking your project submission to an academic project, it will pull in information
+from the data file such as skill targets, description and deadline. You can view all
+academic projects at [projects]({{ '/projects' | relative_url }}).
+
+Individual iterations on your evaluation within the page are created by using a custom
+'liquid' tag `{% raw %}{% v %} ... {% end v %}{% endraw %}`. When you have met a specific
+competency, you can include that in the evaluation using `{% raw %}{% c COMPETENCY_ID %}{% endraw %}`.
+You can view all competencies at [competencies]({{ '/competencies' | relative_url }}).
+
+See the [example file](https://github.com/joshhills/dsm-portfolio-theme/blob/master/_posts/2018-02-07-test-project-one/vignette.md) in the demo project.
+
+### Progression
+
+You can see an overview of all projects at [progression]({{ '/progression' | relative_url }}).
+
+### Hosting on Github Pages
+
+- `git init` in `_site`
+- Create branch `gh-pages`
+- Set remote to the same repository using command `git remote add origin git@github.com:username/repositoryname.git` 
+- Add, commit and push changes
+- View latest version of branch at `https://username.github.io/repositoryname/`
+
+### API
+
+The API and associated documentation pages are auto-generated upon build. Their documentation can be found [here]({{ '/api' | relative_url }}).
+
+## Modifications
+
+Administrators may fork the [theme](https://github.com/joshhills/dsm-portfolio-theme) in order to maintain an updated version of `_data` and other information. They may also fork the [site example]() in order to point this to their version of the theme. Pull requests made to the original of either will be accepted upon code review.
+
+
+Students should fork the [site example](https://github.com/joshhills/dsm-portfolio-site) for a quick set-up. Pull requests may be made to the original repository, however only modifications to the initial theme in the form of optional feature extensions (widgets) or bug-fixes will be accepted by students. Make sure that tests pass, and that no personal information is included.
+
+Issues raised represent feedback that may be taken into consideration during further development. Contact your course representatives for immediate concerns.
+
+## Legal
+
+This theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Attributions
+
+- [jekyll](https://github.com/jekyll/jekyll) w/ MIT licence
+- [jekyll-jupyter-notebook](https://github.com/red-data-tools/jekyll-jupyter-notebook) by RED Data Tools w/ Apache 2.0 license
+- [jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme) by Ben Balter w/ MIT license
+- [jekyll-data](https://github.com/ashmaroli/jekyll-data) by Ashwin Maroli w/ MIT
+                    {% endcapture %}
+                    {{ about_contents | markdownify }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
