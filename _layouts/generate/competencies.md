@@ -2,6 +2,8 @@
 layout: page
 ---
 
-These are the competencies.
+# Competencies 
+
+{% include notice.html %}
 
 {% include competencies.html %}

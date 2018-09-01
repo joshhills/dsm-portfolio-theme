@@ -1,4 +1,7 @@
-# In order of inclusion...
+# In order of inclusion left-to-right.
+# External is rendered as a button and
+# opens a new tab.
+
 - url: /about
   title: About
 

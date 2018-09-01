@@ -1,12 +1,8 @@
 # Site configutation
 # 1. Files excluded from Jekyll builds
 # 2. Installed Gems
-# 3. Gem settings
-# 4. Jekyll settings
-# 5. Collections
-# 6. Jekyll collections settings
-# 7. Site settings
-# 8. User settings
+# 3. Site settings
+# 4. User settings
 
 # 1. Files excluded from Jekyll builds
 exclude:
@@ -22,32 +18,21 @@ include:
 plugins:
 - jekyll-jupyter-notebook
 - liquid_pluralize
-# - dsm-portfolio-plugin
+- dsm-portfolio-plugin
 
-# 3. Gem settings
-
-# 4. Jekyll settings
-# defaults:
-
-
-# 5. Collections
-# collections
-#   testimonials
-
-# 6. Jekyll collections settings
-
-# 7. Site settings
+# 3. Site settings
 encoding: utf-8
 lang: en-GB
 notebook_base_path: /assets/notebooks/
 project_description_truncation: 64
+small_table_limit: 6
 
-# 8. User settings
+# 4. User settings
 full_name: Josh Hills
 contact_details:
   - type: email 
     title: Email
-    url: josh@jargonify.com
+    url: mailto:josh@jargonify.com
   - type: website
     title: Github
     url: https://github.com/joshhills

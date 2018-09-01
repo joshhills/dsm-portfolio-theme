@@ -1,3 +1,6 @@
+# The first category is expected to be the primary category
+# used for sorting.
+
 - id: C1
   title: Example Competency 1
   description: Test description
@@ -12,6 +15,24 @@
 
 - id: C3
   title: Example Competency 3
+  description: Test description
+  categories:
+    - Example Category 3
+
+- id: C4
+  title: Example Competency 4
+  description: Test description
+  categories:
+    - Example Category 1
+
+- id: C5
+  title: Example Competency 5
+  description: Test description
+  categories:
+    - Example Category 2
+
+- id: C6
+  title: Example Competency 6
   description: Test description
   categories:
     - Example Category 3

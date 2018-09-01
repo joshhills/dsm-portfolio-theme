@@ -1,0 +1,19 @@
+# Manage text inserted into the top of all documentation pages
+# without having to mess with hard-coded templates.
+
+/progression: >
+  This page indicates progress over time in regards to project completion and skill development.
+
+  Red means a project's deadline has passed without submission. Yellow means a project has been
+  submitted on time but has not fulfilled all of the target skills - green has.
+
+  Circular ticks are extra skill inclusions that were not targets.
+
+/competencies: >
+  Example text describing competencies.
+
+/projects: >
+  Example text describing projects.
+
+/about: >
+  Example about text.

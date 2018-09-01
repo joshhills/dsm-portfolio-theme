@@ -1,3 +1,6 @@
+# This controls what kind of documents are
+# auto-generated when a new project is created.
+
 - post_type: vignette
   template_file: vignette-example.md
 

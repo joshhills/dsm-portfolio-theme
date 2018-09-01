@@ -1,78 +1,73 @@
-<!-- List all projects in collection -->
 <div class="row">
     <div class="col">
         <h2 class="mb-4">
-            Projects
+            Submitted Projects
         </h2>
-        <!-- TODO: Add search bar -->
-
-        <!-- Page variables -->
         {% assign truncate_value = site.project_description_truncation | default: 64 %}
-        
-        <!-- Group posts by subdirectory (parent project Id) -->
         {% assign postsByProject = site.posts | group_by_exp: "post", "post.project_id" %}
-        {% for project in postsByProject %}
-
-        {% if project.items[0].project_code != -1 %}
-            {% assign linked_project = site.data.projects | where:"id", project.items[0].project_code | first %}
-            {% assign projectType = "Academic Project" %}
-            {% if linked_project and linked_project.deadline %}
-                {% assign today_date = 'now' | date: '%s' %}
-                {% assign pre_date = linked_project.deadline | date: '%s' %}
-                {% if today_date < pre_date %}  
-                    {% assign days_until_deadline = pre_date | minus: today_date | divided_by: 3600 | divided_by: 24 | plus: 1 %}
-                    {% assign days_until_deadline = days_until_deadline | pluralize: "Day", "Days" %}
-                    {% assign incomplete = true %}
-                    {% assign classString = "border-warning" %}
+        {% if postsByProject.size > 0 %}
+            {% for project in postsByProject %}
+                {% if project.items[0].project_code != -1 %}
+                    {% assign linked_project = site.data.projects | where:"id", project.items[0].project_code | first %}
+                    {% assign projectType = "Academic Project" %}
+                    {% if linked_project and linked_project.deadline %}
+                        {% assign today_date = 'now' | date: '%s' %}
+                        {% assign pre_date = linked_project.deadline | date: '%s' %}
+                        {% if today_date < pre_date %}  
+                            {% assign days_until_deadline = pre_date | minus: today_date | divided_by: 3600 | divided_by: 24 | plus: 1 %}
+                            {% assign days_until_deadline = days_until_deadline | pluralize: "Day", "Days" %}
+                            {% assign incomplete = true %}
+                            {% assign classString = "border-warning" %}
+                        {% else %}
+                            {% assign incomplete = false %}
+                            {% assign classString = "" %}
+                        {% endif %}
+                    {% else %}
+                        {% assign classString = "border-primary" %}
+                        {% assign incomplete = false %}
+                    {% endif %}
                 {% else %}
-                    {% assign incomplete = false %}
+                    {% assign projectType = "Personal Project" %}
                     {% assign classString = "" %}
+                    {% assign linked_project = nil %}
+                    {% assign incomplete = false %}
                 {% endif %}
-            {% else %}
-                {% assign classString = "border-primary" %}
-                {% assign incomplete = false %}
-            {% endif %}
-        {% else %}
-            {% assign projectType = "Personal Project" %}
-            {% assign classString = "" %}
-            {% assign linked_project = nil %}
-            {% assign incomplete = false %}
-        {% endif %}
 
-        {% for item in project.items %}
-            {% if item.type == "summary" %}
-                {% assign project_summary = item.content %}
-                {% break %}
-            {% endif %}
-        {% endfor %}
-        
-        <div class="card mb-4 {{ classString }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ project.items[0].project_title }}</h5>
-                {% if incomplete %}
-                    {% assign deadlineString = " | Deadline: " | append: linked_project.deadline | append: " (" | append: days_until_deadline | append: ")" %}
-                {% else %} 
-                    {% assign deadlineString = "" %}
-                {% endif %}
-                <h6 class="card-subtitle mb-2 text-muted">{{ project.items[0].date | date: "%d-%m-%Y" }}{{ deadlineString }}</h6>
-                <p class="card-text"><small class="text-muted text-primary">{{ projectType }}</small></p>
-                {% if project_summary %}   
-                    <p class="card-text">{{ project_summary | truncatewords: truncate_value }}</p>
-                {% elsif linked_project and linked_project.description %}
-                    <p class="card-text">{{ linked_project.description | truncatewords: truncate_value }}</p>
-                {% endif %}
-                {% for file in project.items %}
-                    <!-- Add number of vignettes pill -->
-                    <a class="card-link" href="{{ file.url | relative_url }}">{{ file.type | capitalize }}{% if file.type == "vignette" and file["vignettes"].size > 0 %}
-                            <span class="badge badge-primary">{{file["vignettes"].size}}</span>
-                            {% endif %}</a>
+                {% for item in project.items %}
+                    {% if item.type == "summary" %}
+                        {% assign project_summary = item.excerpt %}
+                        {% break %}
+                    {% endif %}
                 {% endfor %}
+                <div class="card mb-4 {{ classString }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.items[0].project_title }}</h5>
+                        {% if incomplete %}
+                            {% assign deadlineString = " | Deadline: " | append: linked_project.deadline | append: " (" | append: days_until_deadline | append: ")" %}
+                        {% else %} 
+                            {% assign deadlineString = "" %}
+                        {% endif %}
+                        <h6 class="card-subtitle mb-2 text-muted">{{ project.items[0].date | date: "%d-%m-%Y" }}{{ deadlineString }}</h6>
+                        <p class="card-text"><small class="text-muted text-primary">{{ projectType }}</small></p>
+                        {% if project_summary %}   
+                            <p class="card-text">{{ project_summary | truncatewords: truncate_value }}</p>
+                        {% elsif linked_project and linked_project.description %}
+                            <p class="card-text">{{ linked_project.description | truncatewords: truncate_value }}</p>
+                        {% endif %}
+                        {% for file in project.items %}
+                            <a class="card-link" href="{{ file.url | relative_url }}">{{ file.type | capitalize }}{% if file.type == "vignette" and file["vignettes"].size > 0 %}
+                                    <span class="badge badge-primary">{{file["vignettes"].size}}</span>
+                                    {% endif %}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% assign project_summary = nil %}
+            {% endfor %}
             </div>
-        </div>
-
-        {% assign project_summary = nil %}
-
-        {% endfor %}
-        </div>
+        {% else %}
+            <p class="lead">
+                No projects found. See <a href="{{ '/about' | relative_url }}">about</a> to find out how to make them.
+            </p>
+        {% endif %}
     </div>
 </div>

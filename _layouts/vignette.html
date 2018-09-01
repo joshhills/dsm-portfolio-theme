@@ -2,11 +2,7 @@
 layout: default
 ---
 
-<!-- Breadcrumbs -->    
 {% include breadcrumbs.html %}
-
-<!-- Project Link -->
-<!-- TODO: Make this an info bar with an expandable description. -->
 {% assign linked_project = site.data.projects | where:"id", page.project_code | first %}
 {% if page.project_code and linked_project %}
     <div class="container mb-4">
@@ -28,8 +24,6 @@ layout: default
         </button>
     </div>
 {% endif %}
-
-<!-- Competencies block -->
 <div class="row">
     <div class="col">
         <div class="table-responsive">
@@ -39,15 +33,11 @@ layout: default
         </div>
     </div>
 </div>
-
-<!-- Vignette content blocks -->
 <div class="row">
     <div class="col">
         {{ content }}
     </div>
 </div>
-
-<!-- Vignette tabs -->
 <div class="row mt-4">
     <div class="col">
         <nav aria-label="...">
@@ -79,10 +69,8 @@ layout: default
         </nav>
     </div>
 </div>
-
-<!-- Inject data variables into page context for JavaScript -->
 <script>
-    // Store raw data in ubiquitous object.
+    // Inject data variables into page context for JavaScript.
     this.window['vignette_vignettes'] = {{ page.vignettes | jsonify }};
     this.window['vignette_targets'] = {{ page.targets | jsonify }};
     this.window['vignette_c_url'] = "{{ '/competencies' | relative_url }}";

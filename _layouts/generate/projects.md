@@ -1,6 +1,9 @@
 ---
 layout: page
 ---
-These are the projects.
+
+# Projects
+
+{% include notice.html %}
 
 {% include projects.html %}

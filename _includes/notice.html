@@ -1,0 +1,7 @@
+{% assign page_url = page.url | replace: ".html","" %}
+
+{% if site.data.notices[page_url] %}
+<p>
+    {{ site.data.notices[page_url] }}
+<p>
+{% endif %}

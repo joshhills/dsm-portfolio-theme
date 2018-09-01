@@ -1,10 +1,8 @@
 ---
 layout: default
 ---
-<!-- Breadcrumbs -->    
-{% include breadcrumbs.html %}
 
-<!-- Title -->
+{% include breadcrumbs.html %}
 <div class="row">
     <div class="col">
         <h1>
@@ -12,58 +10,72 @@ layout: default
         </h1>
     </div>
 </div>
-
 <div class="row">
-    <!-- Content -->
     <div class="col">
-        <h3>
-            Summary
-        </h3>
-        {{ content }}
+        <div class="row">
+            <div class="container">
+                <h3>
+                    Summary
+                </h3>
+                {{ content }}
+            </div>
+        </div>
     </div>
-    <!-- Meta -->
     <div class="col">
-        <div class="">
-            <h3>
-                Length
-            </h3>
-            {{ page.length }}
+        {% if page.length %}
+        <div class="row">
+            <div class="container mb-3">
+                <h3>
+                    Length
+                </h3>
+                {{ page.length }}
+            </div>
         </div>
-        <div class="">
-            <h3>
-                Tags
-            </h3>
-            <ul class="">
-                {% for tag in page.tags %}
-                    <li>
-                        {{ tag }}
-                    </li>
-                {% endfor %}
-            </ul>
+        {% endif %}
+        {% if page.tags.size > 0 %}
+        <div class="row">
+            <div class="container">
+                <h3>
+                    Tags
+                </h3>
+                <ul>
+                    {% for tag in page.tags %}
+                        <li>
+                            {{ tag }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <div class="">
-            <h3>
-                External Resources
-            </h3>
-            <ul class="">
-                {% for external_resource in page.external_resources %}
-                    <li>
-                        <a class="" href="{{ external_resource.url }}" target="_blank">
-                            {{ external_resource.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+        {% endif %}
+        {% if page.external_resources.size > 0 %}
+        <div class="row">
+            <div class="container">
+                <h3>
+                    External Resources
+                </h3>
+                <ul>
+                    {% for external_resource in page.external_resources %}
+                        <li>
+                            <a href="{{ external_resource.url }}" target="_blank">
+                                {{ external_resource.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
+        {% endif %}
     </div>
 </div>
-
 {% if page.notebook_file %}
-    <div class="row">
-        <div class="col">
-            <div class="">
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="container">
                 {% jupyter_notebook site.notebook_base_path | append: page.notebook_file | relative_url %}
             </div>
         </div>
-    </div>  
+    </div>
+</div>  
 {% endif %}

@@ -2,6 +2,94 @@
 layout: default
 ---
 
-Ayy you're on the HTML side of things.
+<h1>
+    Progression
+</h1>
 
-{{ page.payload | jsonify }}
+{% include notice.html %}
+
+{% assign small_table_limit = site.small_table_limit | default: 5 %}
+
+<div class="table-responsive">
+    <table class="table table-hover {% if page.payload['num_competencies'] > small_table_limit %}table-sm{% endif %}">
+        <tr>
+            <th>
+                Project Id
+            </th>
+            <th>
+                Project Title
+            </th>
+            <th>
+                Project Deadline
+            </th>
+            {% for category in page.payload['categories'] %}
+            <th colspan="{{ category[1].size }}">
+                {{ category[0] }}
+            </th>
+            {% endfor %}
+
+            <th>
+                All Targets Hit
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            {% for category in page.payload['categories'] %}
+                {% for competency in category[1] %}
+            <td>
+                {{ competency['id'] }}
+            </td>
+                {% endfor %}
+            {% endfor %}
+            <td></td>
+        </tr>
+        {% for project_row in page.payload['project_rows'] %}
+        
+        {% if project_row['deadline'] %}
+            {% assign today_date = 'now' | date: '%s' %}
+            {% assign pre_date = project_row['deadline'] | date: '%s' %}
+            {% if today_date > pre_date %}  
+                {% assign passed = true %}
+            {% else %}
+                {% assign passed = false %}
+            {% endif %}
+        {% else %}
+            {% assign passed = false %}
+        {% endif %}
+
+        <tr class="{% if project_row['submitted'] != true and passed %}table-danger{% endif %} {% if project_row['allTargetsHit'] %}table-success{% endif %} {% if project_row['allTargetsHit'] != true and passed %}table-warning{% endif %}">
+            <td>
+                {{ project_row['projectId'] }}
+            </td>
+            <td>
+                {{ project_row['projectTitle'] }}
+            </td>
+            <td>
+                {{ project_row['deadline'] }}
+            </td>
+            {% for competency in project_row['competencies'] %}
+            <td class="{% if competency['included'] %}included{% endif %} {% if competency['target'] %}target{% endif %}">
+                {% if competency['included'] %}
+                    {% if competency['target'] %}
+                        <i class="fas fa-check-square"></i>
+                    {% else %}
+                        <i class="far fa-check-circle" style="opacity: 0.3"></i>
+                    {% endif %}
+                {% elsif competency['target'] %}
+                    <i class="far fa-square"></i>
+                {% endif %}
+            </td>
+            {% endfor %}
+            <td>
+                {% if project_row['allTargetsHit'] %}
+                    <i class="fas fa-check"></i>
+                {% else %}
+                    <i class="fas fa-times"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

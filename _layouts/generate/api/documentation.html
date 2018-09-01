@@ -22,13 +22,14 @@ permalink: /api/index
                     <a href="#portfolio" class="list-group-item">Portfolio</a>
                     <a href="#summaries" class="list-group-item">Summaries</a>
                     <a href="#vignettes" class="list-group-item">Vignettes</a>
+                    <a href="#progression" class="list-group-item">Progression</a>
                 </ul>
             </div>
         </div>
         <!-- Request Documentation -->
         <div class="col-lg">
             <div class="row">
-                <div class="container">
+                <div class="container" style="margin-bottom: 75vh">
                     <div class="row">
                         <div class="container">
                             <p class="h1" id="v1">Version 1</p>
@@ -242,6 +243,60 @@ permalink: /api/index
             "targets": [
                 "C1"
             ]
+        }
+    ],
+    "last_updated": "...",
+    "status": "OK"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <p class="h2" id="progression">Progression</p>
+                            <p>
+                                Final vignettes marked against academic project targets.
+                            </p>
+                            <div class="card mb-4 mt-4">
+                                <div class="card-header">
+                                        <a href="{{ "api/v1/progression.json" | relative_url }}" class="mr-2"><code>{{ "api/v1/progrssion.json" | relative_url }}</code></a>
+                                    <span class="badge badge-primary">GET</span>
+                                    <span class="badge badge-secondary">ALL</span>
+                                </div>
+                                <div class="card-body">
+                                    <pre class="mb-0"><code>{
+    "data": [
+        {
+            "project_rows": [
+                {
+                    "projectId": 1,
+                    "projectTitle": "Test Project One",
+                    "deadline": "01-08-2018",
+                    "submitted": false,
+                    "competencies": [
+                        {
+                            "competencyId": "C1",
+                            "target": true,
+                            "included": false
+                        }
+                    ],
+                    "allTargetsHit": false
+                }
+            ],
+            "categories": {
+                "Example Category 1": [
+                    {
+                        "id": "C1",
+                        "title": "Example Competency 1",
+                        "description": "Test description",
+                        "categories": [
+                            "Example Category 1"
+                        ]
+                    }
+                ]
+            },
+            "num_competencies": 6
         }
     ],
     "last_updated": "...",

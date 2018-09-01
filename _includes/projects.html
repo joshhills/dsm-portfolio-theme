@@ -5,7 +5,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Deadline</th>
-            <th>Competencies</th>
+            <th>Targets</th>
         </tr>
         {% for project in site.data.projects %}
         <tr id="{{ project.id }}">
@@ -22,8 +22,8 @@
                 {{ project.deadline | date: "%d-%m-%Y" }}
             </td>
             <td>
-                {% for competency in project.competencies %}
-                    {{ competency }}<br/>
+                {% for target in project.targets %}
+                    {{ target }}<br/>
                 {% endfor %}
             </td>
         </tr>

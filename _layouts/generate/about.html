@@ -36,30 +36,30 @@ layout: page
         <!-- Contents -->
         <div class="col-lg">
             <div class="row">
-                <div class="container" style="margin-bottom: 75vh">
+                <div class="container">
+                    <h1>About</h1>
                     {% include notice.html %}
                     {% capture about_contents %}
-# About
-
-This guide provides a brief overview of how to use this software. An example
+This guide provides a brief overview of how to use this portfolio. An example
 site has been provided to reduce the amount of pre-requisite knowledge needed,
 and the theme itself has been built with degradation in mind (meaning that 
 it should be easy to customise and somewhat hard to break!).
 
-The portfolio is produced and maintained by [Josh Hills](mailto:josh@jargonify.com)
+The software is produced and maintained by [Josh Hills](mailto:josh@jargonify.com)
 (post-graduate), for the purpose of providing a modern solution to submitting and
 assessing work for the data science masters course at Newcastle University. It may
-be used beyond this scope - see [modifications](#modificiations).
+be used beyond this scope - see [modifications](#modifications).
 
 ## Usage
 
 ### Technology
 
-Jekyll is a static-site generator running in the programming language Ruby.
+[Jekyll](https://jekyllrb.com/) is a static-site generator running in the programming language Ruby.
 It can be run on any major platform.
 
-It uses the Liquid templating engine. You write posts in Markdown, and they
-are converted to a folder containing your entire portfolio site.
+It uses the [Liquid](https://help.shopify.com/en/themes/liquid) templating engine. You write posts in Markdown, and they
+are converted to a folder containing your entire portfolio site. Data files are
+written in [YAML](http://yaml.org/).
 
 The site provides means for the academic institution to add information about
 projects, competencies, useful links and documentation. It provides means for
@@ -87,6 +87,9 @@ Writing any file for a project can be done using Markdown or HTML. See [cheatshe
 
 - `jekyll project "NAME OF PROJECT"`
 - OR copy [example structure](https://github.com/joshhills/dsm-portfolio-theme/tree/master/_posts/2018-02-07-test-project-one) from demo project
+
+Note that the date is YYYY-MM-DD-title. This date should be when you start writing. If it is dated in the
+future it wont be included in the site.
 
 #### Summaries
 
@@ -148,6 +151,26 @@ This theme is available as open source under the terms of the [MIT License](http
 - [jekyll-jupyter-notebook](https://github.com/red-data-tools/jekyll-jupyter-notebook) by RED Data Tools w/ Apache 2.0 license
 - [jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme) by Ben Balter w/ MIT license
 - [jekyll-data](https://github.com/ashmaroli/jekyll-data) by Ashwin Maroli w/ MIT
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
                     {% endcapture %}
                     {{ about_contents | markdownify }}
                 </div>

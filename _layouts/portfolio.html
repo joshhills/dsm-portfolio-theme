@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-<!-- Main Index Scroll -->
 <div class="jumbotron row">
     <div class="col">
         <div class="row">
@@ -14,10 +13,9 @@ layout: default
                 <h2>
                     Contact
                 </h2>
-                <!-- TODO: Contact information. -->
                 {% for link in site.contact_details %}
                 <li>
-                    <a class="a-link" href="{{ link.url }}" target="_self">
+                    <a class="a-link" href="{{ link.url | relative_url }}" target="_self">
                         {{ link.title }}
                     </a>
                 </li>
