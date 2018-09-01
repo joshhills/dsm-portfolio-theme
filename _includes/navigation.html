@@ -7,16 +7,34 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            {% for header-link in site.data.header-links %}
             {% assign page_url = page.url | replace: ".html","" %}
-            <li class="nav-item {% if page_url == header-link.url %}active{% endif %} {% unless forloop.last %}mr-2{% endunless %}">
-                {% if header-link.external %}
-                <a class="btn btn-outline-primary" href="{{ header-link.url | relative_url }}" target="_blank">
-                    {{ header-link.title }}
+            <li class="nav-item {% if page_url == '/progression' %}active{% endif %} mr-2">
+                <a class="nav-link" href="{{ '/progression' | relative_url }}">
+                    Progression
+                </a>
+            </li>
+            <li class="nav-item {% if page_url == '/projects' %}active{% endif %} mr-2">
+                <a class="nav-link" href="{{ '/projects' | relative_url }}">
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item {% if page_url == '/competencies' %}active{% endif %}">
+                <a class="nav-link" href="{{ '/competencies' | relative_url }}">
+                    Competencies
+                </a>
+            </li>
+            <li>
+                <a class="nav-link disabled" href="#">|</a>
+            </li>
+            {% for navigation-link in site.data.navigation-links %}
+            <li class="nav-item {% if page_url == navigation-link.url %}active{% endif %} {% unless forloop.last %}mr-2{% endunless %}">
+                {% if navigation-link.external %}
+                <a class="btn btn-outline-primary" href="{{ navigation-link.url | relative_url }}" target="_blank">
+                    {{ navigation-link.title }}
                 </a>
                 {% else %}
-                <a class="nav-link" href="{{ header-link.url | relative_url }}" target="_self">
-                    {{ header-link.title }}
+                <a class="nav-link" href="{{ navigation-link.url | relative_url }}" target="_self">
+                    {{ navigation-link.title }}
                 </a>
                 {% endif %}
             </li>

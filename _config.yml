@@ -20,9 +20,9 @@ include:
 
 # 2. Installed Gems
 plugins:
-- dsm-portfolio-plugin
 - jekyll-jupyter-notebook
 - liquid_pluralize
+# - dsm-portfolio-plugin
 
 # 3. Gem settings
 
