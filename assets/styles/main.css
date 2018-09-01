@@ -1,0 +1,15 @@
+/***
+ * Override default library styles.
+ */
+.vignette-block {
+  display: none; }
+  .vignette-block.active {
+    display: block; }
+
+tr:target {
+  background-color: #dee2e6; }
+
+.fa-sort,
+.fa-sort-up,
+.fa-sort-down {
+  cursor: pointer; }
